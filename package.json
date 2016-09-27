@@ -1,0 +1,46 @@
+{
+  "name": "webpack-rails-manifest-plugin",
+  "version": "0.1.0",
+  "description": "A missing link to Webpack and Rails integration",
+  "main": "index.js",
+  "scripts": {
+    "__eslint": "eslint index.js",
+    "precommit": "npm run __eslint && npm run test",
+    "prepublish": "npm run __eslint && npm run test",
+    "test": "jest",
+    "start": "jest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andreicek/webpack-rails-manifest-plugin.git"
+  },
+  "keywords": [
+    "rails",
+    "webpack",
+    "plugin",
+    "manifest",
+    "json",
+    "hotreload"
+  ],
+  "author": "Infinum <javascript.team@infinum.co>",
+  "license": "MIT",
+  "contributors": [
+    {
+      "name": "Andrei Zvonimir Crnkovic",
+      "email": "andrei@infinum.co"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/andreicek/webpack-rails-manifest-plugin/issues"
+  },
+  "homepage": "https://github.com/andreicek/webpack-rails-manifest-plugin#readme",
+  "devDependencies": {
+    "babel-eslint": "^6.1.2",
+    "eslint": "^3.6.0",
+    "husky": "^0.11.8",
+    "jest": "^15.1.1"
+  },
+  "dependencies": {
+    "fs-extra": "^0.30.0"
+  }
+}
