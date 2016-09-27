@@ -3,7 +3,7 @@ webpack-rails-manifest-plugin
 
 A missing link to Webpack and Rails integration.
 
-[![Build Status](https://semaphoreci.com/api/v1/infinum/webpack-rails-manifest-plugin/branches/master/badge.svg)](https://semaphoreci.com/infinum/webpack-rails-manifest-plugin)
+[![Build Status](https://semaphoreci.com/api/v1/infinum/webpack-rails-manifest-plugin/branches/master/badge.svg)](https://semaphoreci.com/infinum/webpack-rails-manifest-plugin) [![npm version](https://badge.fury.io/js/webpack-rails-manifest-plugin.svg)](https://badge.fury.io/js/webpack-rails-manifest-plugin)
 
 ## Usage
 
