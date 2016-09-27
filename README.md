@@ -5,6 +5,8 @@ A missing link to Webpack and Rails integration.
 
 [![Build Status](https://semaphoreci.com/api/v1/infinum/webpack-rails-manifest-plugin/branches/master/badge.svg)](https://semaphoreci.com/infinum/webpack-rails-manifest-plugin) [![npm version](https://badge.fury.io/js/webpack-rails-manifest-plugin.svg)](https://badge.fury.io/js/webpack-rails-manifest-plugin)
 
+This plugin can be used to flush a list of your assets to a `manifest.json` file and replace asset pipeline. Using that file you can require your assets in Rails (see [Rails helper](#rails)).
+
 ## Usage
 
 This is a Webpack plugin that creates a manifest file for your assets. It can output files to Webpack (as emitting) or as a file on the filesystem.
@@ -37,7 +39,37 @@ new RailsManifestPlugin({
   writeToFileEmit: false, // Should we write to fs even if run with memory-fs
   extraneous: null // Any assets specified as "extra"
 });
-```  
+```
+
+## Rails
+
+To use this file with Rails you'll need a helper to replace asset pipeline. Here is an example how you an do this:
+
+```Ruby
+module WebpackHelper
+  def webpack_asset_url(asset)
+    "/assets/#{manifest.fetch(asset)}"
+  end
+
+  def manifest
+    @manifest ||= JSON.parse(File.read('manifest.json'))
+  rescue
+    fail 'Please run webpack'
+  end
+end
+```
+
+This file would then be saved in `app/helpers/webpack_helper.rb` for example.
+
+Now you can use it like this:
+
+```HTML
+<img src="#{webpack_asset_url('logo.svg')}" alt="logo" />
+```
+
+to require your assets. [Here](https://github.com/infinum/webpack-rails-manifest-plugin/blob/master/example/webpack.config.js#L12) is an example on how to add a digest to a file.
+
+**Take note that you can't use Rails `image_tag` helper.**
 
 ## License
 
