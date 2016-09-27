@@ -9,6 +9,10 @@ A missing link to Webpack and Rails integration.
 
 This is a Webpack plugin that creates a manifest file for your assets. It can output files to Webpack (as emitting) or as a file on the filesystem.
 
+```
+npm install --save-dev webpack-rails-manifest-plugin
+```
+
 In your `webpack.config.js` file specify the plugin:
 
 ```JavaScript
