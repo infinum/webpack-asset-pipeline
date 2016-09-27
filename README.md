@@ -3,6 +3,8 @@ webpack-rails-manifest-plugin
 
 A missing link to Webpack and Rails integration.
 
+[![Build Status](https://semaphoreci.com/api/v1/infinum/webpack-rails-manifest-plugin/branches/master/badge.svg)](https://semaphoreci.com/infinum/webpack-rails-manifest-plugin)
+
 ## Usage
 
 This is a Webpack plugin that creates a manifest file for your assets. It can output files to Webpack (as emitting) or as a file on the filesystem.
