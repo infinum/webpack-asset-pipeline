@@ -1,0 +1,14 @@
+{
+  "name": "",
+  "version": "",
+  "description": "",
+  "scripts": {
+    "start": "node webpack.config.js"
+  },
+  "devDependencies": {
+    "webpack": "1.12.13",
+    "webpack-dev-server": "^1.16.1"
+  },
+  "author": "",
+  "license": ""
+}
