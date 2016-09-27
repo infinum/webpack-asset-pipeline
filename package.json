@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/andreicek/webpack-rails-manifest-plugin.git"
+    "url": "git+https://github.com/infinum/webpack-rails-manifest-plugin.git"
   },
   "keywords": [
     "rails",
@@ -22,7 +22,7 @@
     "json",
     "hotreload"
   ],
-  "author": "Infinum <javascript.team@infinum.co>",
+  "author": "Infinum Inc. <javascript.team@infinum.co>",
   "license": "MIT",
   "contributors": [
     {
@@ -31,9 +31,9 @@
     }
   ],
   "bugs": {
-    "url": "https://github.com/andreicek/webpack-rails-manifest-plugin/issues"
+    "url": "https://github.com/infinum/webpack-rails-manifest-plugin/issues"
   },
-  "homepage": "https://github.com/andreicek/webpack-rails-manifest-plugin#readme",
+  "homepage": "https://github.com/infinum/webpack-rails-manifest-plugin#readme",
   "devDependencies": {
     "babel-eslint": "^6.1.2",
     "eslint": "^3.6.0",
