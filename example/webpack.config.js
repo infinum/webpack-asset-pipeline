@@ -20,7 +20,7 @@ const config = {
 };
 
 new WebpackDevServer(webpack(config), Object.assign({
-  contentBase: path.join(__dirname, '../build'),
+  contentBase: path.join(__dirname, 'build'),
   inline: true,
   progress: true,
   compress: true,
