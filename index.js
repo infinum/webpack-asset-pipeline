@@ -42,7 +42,7 @@ module.exports = function RailsManifestPlugin(options) {
    */
   const __apply = (compiler) => {
     const outputName = this.__props.fileName;
-    const extraneous = this.__props.extraneous || {};
+    const initialExtraneous = this.__props.extraneous || {};
     const moduleAssets = {};
     const manifest = {};
 
@@ -67,6 +67,7 @@ module.exports = function RailsManifestPlugin(options) {
      * are done.
      */
     compiler.plugin('emit', (compilation, callback) => {
+      const extraneous = initialExtraneous;
       const stats = compilation.getStats().toJson();
 
        /**
