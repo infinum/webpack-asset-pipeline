@@ -31,6 +31,22 @@ module.exports = function RailsManifestPlugin(options) {
     fse.outputFileSync(outputFile, manifest);
   };
 
+  const __findOriginalAsset = function(compilation, assetName) {
+    if (!compilation || !compilation.cache || typeof compilation.cache !== 'object') {
+      return null;
+    }
+
+    const cacheKeys = Object.keys(compilation.cache);
+
+    for (let keyIndex = 0; keyIndex < cacheKeys.length; keyIndex++) {
+      const cache = compilation.cache[cacheKeys[keyIndex]];
+      if (cache.assets && assetName in cache.assets) {
+        return cache.rawRequest;
+      }
+    }
+
+    return null;
+  };
 
    /**
    * Webpack will call this method when installing the plugin. This registers
@@ -42,7 +58,8 @@ module.exports = function RailsManifestPlugin(options) {
    */
   const __apply = (compiler) => {
     const outputName = this.__props.fileName;
-    const extraneous = this.__props.extraneous || {};
+    const mapAssetPath = this.__props.mapAssetPath;
+    const initialExtraneous = this.__props.extraneous || {};
     const moduleAssets = {};
     const manifest = {};
 
@@ -67,6 +84,7 @@ module.exports = function RailsManifestPlugin(options) {
      * are done.
      */
     compiler.plugin('emit', (compilation, callback) => {
+      const extraneous = initialExtraneous;
       const stats = compilation.getStats().toJson();
 
        /**
@@ -92,8 +110,14 @@ module.exports = function RailsManifestPlugin(options) {
        * module.
        */
       Object.assign(extraneous, stats.assets.reduce((acc, asset) => {
-        const assetName = moduleAssets[asset.name];
+        const originalAsset = __findOriginalAsset(compilation, asset.name);
+        let assetName = originalAsset || moduleAssets[asset.name];
+
         if (assetName) {
+          if (typeof mapAssetPath === 'function') {
+            assetName = mapAssetPath(assetName, asset.name);
+          }
+
           acc[assetName] = asset.name;
         }
 
@@ -141,7 +165,8 @@ module.exports = function RailsManifestPlugin(options) {
   this.__props = Object.assign({
     fileName: 'manifest.json', // Manifest file name to be written out
     writeToFileEmit: false, // Should we write to fs even if run with memory-fs
-    extraneous: null // Any assets specified as "extra"
+    extraneous: null, // Any assets specified as "extra"
+    mapAssetPath: (requirePath) => requirePath // Map the asset paths to the keys in manifest
   }, options || {});
 
   return {
