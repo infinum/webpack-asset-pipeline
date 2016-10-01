@@ -36,14 +36,15 @@ module.exports = function RailsManifestPlugin(options) {
       return null;
     }
 
-    for (const cacheKey in compilation.cache) {
-      if (compilation.cache.hasOwnProperty(cacheKey)) {
-        const cache = compilation.cache[cacheKey];
-        if (cache.assets && assetName in cache.assets) {
-          return cache.rawRequest;
-        }
+    const cacheKeys = Object.keys(compilation.cache);
+
+    for (let keyIndex = 0; keyIndex < cacheKeys.length; keyIndex++) {
+      const cache = compilation.cache[cacheKeys[keyIndex]];
+      if (cache.assets && assetName in cache.assets) {
+        return cache.rawRequest;
       }
     }
+
     return null;
   };
 
@@ -57,6 +58,7 @@ module.exports = function RailsManifestPlugin(options) {
    */
   const __apply = (compiler) => {
     const outputName = this.__props.fileName;
+    const mapAssetPath = this.__props.mapAssetPath;
     const initialExtraneous = this.__props.extraneous || {};
     const moduleAssets = {};
     const manifest = {};
@@ -109,9 +111,13 @@ module.exports = function RailsManifestPlugin(options) {
        */
       Object.assign(extraneous, stats.assets.reduce((acc, asset) => {
         const originalAsset = __findOriginalAsset(compilation, asset.name);
-        const assetName = originalAsset || moduleAssets[asset.name];
+        let assetName = originalAsset || moduleAssets[asset.name];
 
         if (assetName) {
+          if (typeof mapAssetPath === 'function') {
+            assetName = mapAssetPath(assetName, asset.name);
+          }
+
           acc[assetName] = asset.name;
         }
 
@@ -159,7 +165,8 @@ module.exports = function RailsManifestPlugin(options) {
   this.__props = Object.assign({
     fileName: 'manifest.json', // Manifest file name to be written out
     writeToFileEmit: false, // Should we write to fs even if run with memory-fs
-    extraneous: null // Any assets specified as "extra"
+    extraneous: null, // Any assets specified as "extra"
+    mapAssetPath: (requirePath) => requirePath // Map the asset paths to the keys in manifest
   }, options || {});
 
   return {
