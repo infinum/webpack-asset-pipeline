@@ -31,6 +31,21 @@ module.exports = function RailsManifestPlugin(options) {
     fse.outputFileSync(outputFile, manifest);
   };
 
+  const __findOriginalAsset = function(compilation, assetName) {
+    if (!compilation || !compilation.cache || typeof compilation.cache !== 'object') {
+      return null;
+    }
+
+    for (const cacheKey in compilation.cache) {
+      if (compilation.cache.hasOwnProperty(cacheKey)) {
+        const cache = compilation.cache[cacheKey];
+        if (cache.assets && assetName in cache.assets) {
+          return cache.rawRequest;
+        }
+      }
+    }
+    return null;
+  };
 
    /**
    * Webpack will call this method when installing the plugin. This registers
@@ -93,7 +108,9 @@ module.exports = function RailsManifestPlugin(options) {
        * module.
        */
       Object.assign(extraneous, stats.assets.reduce((acc, asset) => {
-        const assetName = moduleAssets[asset.name];
+        const originalAsset = __findOriginalAsset(compilation, asset.name);
+        const assetName = originalAsset || moduleAssets[asset.name];
+
         if (assetName) {
           acc[assetName] = asset.name;
         }
