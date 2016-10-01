@@ -1,4 +1,5 @@
 example/build/*
+test/build/*
 
 # Logs
 logs
