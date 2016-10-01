@@ -44,7 +44,6 @@ module.exports = function RailsManifestPlugin(options) {
         return cache.rawRequest;
       }
     }
-
     return null;
   };
 
