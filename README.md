@@ -37,9 +37,18 @@ You can specify a few options to the plugin:
 new RailsManifestPlugin({
   fileName: 'manifest.json', // Manifest file name to be written out
   writeToFileEmit: false, // Should we write to fs even if run with memory-fs
-  extraneous: null // Any assets specified as "extra"
+  extraneous: null, // Any assets specified as "extra"
+  mapAssetPath: (requirePath) => requirePath // Map the asset paths to the keys in manifest
 });
 ```
+
+### mapAssetPath
+
+The function will receive two arguments:
+* `requirePath` (e.g. `images/photos/sunset.jpg`) - the path that was originally required in JS/CSS/HTML
+* `outputPath` (e.g. `assets/sunset-44b3dae18da1232cf0c3c9aacd467ae6.jpg`) - the path where the file will be saved
+
+The function should return a string that will be used as a key in the manifest. By default, this will be the `requirePath` value.
 
 ## Rails
 
