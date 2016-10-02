@@ -7,7 +7,8 @@
     "__eslint": "eslint index.js",
     "precommit": "npm run __eslint && npm run test",
     "prepublish": "npm run __eslint && npm run test",
-    "test": "mocha index.test.js"
+    "test": "mocha index.test.js",
+    "start": "npm run test -- -w"
   },
   "repository": {
     "type": "git",
