@@ -31,6 +31,14 @@ module.exports = function RailsManifestPlugin(options) {
     fse.outputFileSync(outputFile, manifest);
   };
 
+   /**
+   * Tries to find the user reuqired file in cace. If it does it returns the
+   * file path user used in the `require` statement. Otherwise it returns null.
+   *
+   * @param {object} compilation - Object containing Webpack context
+   * @param {string} assetName - Emitted file name
+   * @return {string} path that user used in require/import
+   */
   const __findOriginalAsset = function(compilation, assetName) {
     if (!compilation || !compilation.cache || typeof compilation.cache !== 'object') {
       return null;
@@ -44,6 +52,7 @@ module.exports = function RailsManifestPlugin(options) {
         return cache.rawRequest;
       }
     }
+
     return null;
   };
 
@@ -93,12 +102,16 @@ module.exports = function RailsManifestPlugin(options) {
        */
       Object.assign(extraneous, compilation.chunks.reduce((compAcc, chunk) => (
         chunk.files.reduce((acc, file) => {
-          const fileName = chunk.name
+          const chunkName = chunk.name
             ? `${chunk.name}.${__getFileType(file)}`
             : file;
 
-          acc[fileName] = file;
+          let fileName = chunkName;
+          if (typeof mapAssetPath === 'function') {
+            fileName = mapAssetPath(fileName, fileName, true);
+          }
 
+          acc[fileName] = file;
           return acc;
         }, compAcc)
       ), {}));
@@ -114,7 +127,7 @@ module.exports = function RailsManifestPlugin(options) {
 
         if (assetName) {
           if (typeof mapAssetPath === 'function') {
-            assetName = mapAssetPath(assetName, asset.name);
+            assetName = mapAssetPath(assetName, moduleAssets[asset.name], false);
           }
 
           acc[assetName] = asset.name;
@@ -131,14 +144,12 @@ module.exports = function RailsManifestPlugin(options) {
         manifest[key] = extraneous[key];
       });
 
-
        /**
        * Prepare the manifest for writing out to file and/or memory.
        * The first argument is our manifest object, second one is replacer that
        * we are not using, and the third one is number of spaces used.
        */
       const json = JSON.stringify(manifest, null, 2);
-
 
        /**
        * Add our manifest file as an asset to Webpack. This emitts a newly
