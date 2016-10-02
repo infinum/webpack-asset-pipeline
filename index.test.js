@@ -107,4 +107,59 @@ describe('Webpack rails manifest plugin', () => {
       }
     });
   });
+
+  it('it should key files by their require path', (done) => {
+    const newPath = 'test/';
+
+    runWebpack(function(err) {
+      const fs = this.fs;
+      const manifestFile = fs.readFileSync(filePath, 'utf-8');
+      const parsed = JSON.parse(manifestFile);
+
+      Object.keys(parsed).forEach((parsedKey) => {
+        expect(parsedKey.includes(newPath)).to.equal(true);
+      });
+
+      expect(err).to.eq(null);
+      done();
+    }, new Plugin({
+      mapAssetPath(assetPath, name) {
+        return `${newPath}/${name}`;
+      }
+    }), {
+      module: {
+        loaders: [{
+          test: /\.(txt|png)$/,
+          loader: 'file'
+        }]
+      }
+    });
+  });
+
+  it('it should specify if file is chunk', (done) => {
+    const newPath = 'test/';
+    const chunkFileName = 'main.js';
+
+    runWebpack(function(err) {
+      expect(err).to.eq(null);
+      done();
+    }, new Plugin({
+      mapAssetPath(assetPath, name, isChunk) {
+        if (name === chunkFileName) {
+          expect(isChunk).to.equal(true);
+        } else {
+          expect(isChunk).to.equal(false);
+        }
+
+        return `${newPath}/${name}`;
+      }
+    }), {
+      module: {
+        loaders: [{
+          test: /\.(txt|png)$/,
+          loader: 'file'
+        }]
+      }
+    });
+  });
 });
