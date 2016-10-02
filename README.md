@@ -44,9 +44,10 @@ new RailsManifestPlugin({
 
 ### mapAssetPath
 
-The function will receive two arguments:
+The function will receive three arguments:
 * `requirePath` (e.g. `images/photos/sunset.jpg`) - the path that was originally required in JS/CSS/HTML
-* `outputPath` (e.g. `assets/sunset-44b3dae18da1232cf0c3c9aacd467ae6.jpg`) - the path where the file will be saved
+* `assetName` (e.g. `sunset.jpg`) - the file name that was originally required in JS/CSS/HTML
+* `isChunk` (eg. `true`) - specifies if the file is in the named chunk. Output JS and CSS files usually are.
 
 The function should return a string that will be used as a key in the manifest. By default, this will be the `requirePath` value.
 
