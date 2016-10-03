@@ -51,6 +51,24 @@ The function will receive three arguments:
 
 The function should return a string that will be used as a key in the manifest. By default, this will be the `requirePath` value.
 
+## Requiring images
+
+All images have to be required in the JavaScript in order for webpack to process them, except the ones you require in your scss file (because wepback is processing your scss file adready)
+
+You can create a new file which will hold all the images, e.g. `files.js`
+
+```JavaScript
+require('images/file1.jpg');
+require('images/file2.jpg');
+require('images/file3.jpg');
+```
+
+And then in `application.js` (your entrypoint)
+
+```JavaScript
+require('files');
+```
+
 ## Rails
 
 To use this file with Rails you'll need a helper to replace asset pipeline. Here is an example how you an do this:
