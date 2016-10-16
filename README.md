@@ -206,6 +206,51 @@ Now, you can keep using rails helpers to get the assets
 = javascript_include_tag 'application'
 ```
 
+## Production fingerprinting
+
+Original Rails fingerprinting: http://guides.rubyonrails.org/asset_pipeline.html#what-is-fingerprinting-and-why-should-i-care-questionmark
+
+To replicate Rails Asset Pipeline fingerprinting, you can do the following:
+
+```JavaScript
+// webpack.config.js
+const RailsManifestPlugin = require('webpack-rails-manifest-plugin');
+
+{
+  output: {
+    filename: '[name]-bundle.js-chunkhash-[chunkhash]',
+    path: path.join(__dirname, 'build')
+  },
+
+  plugins: [
+    new RailsManifestPlugin({
+      writeToFileEmit: true,
+      mapAssetPath: (requirePath, assetName) => assetName.split('-chunkhash')[0]
+    })
+  ]
+}
+```
+
+This will convert `manifest.json` files such as:
+
+```json
+{
+  "app-bundle.js-chunkhash-cd84246f3ee7778b39a3": "app-bundle.js-chunkhash-cd84246f3ee7778b39a3",
+  "vendor-bundle.js-chunkhash-cd84246f3ee7778b39a3": "vendor-bundle.js-chunkhash-cd84246f3ee7778b39a3"
+}
+```
+
+Into usable ones like:
+
+```json
+{
+  "app-bundle.js": "app-bundle.js-chunkhash-cd84246f3ee7778b39a3",
+  "vendor-bundle.js": "vendor-bundle.js-chunkhash-cd84246f3ee7778b39a3"
+}
+```
+
+Now in your Rails views you can still reference the fingerprinted webpack JS files by their original file names.
+
 ## License
 
 The MIT License
