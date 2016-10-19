@@ -127,12 +127,13 @@ require "rails/test_unit/railtie"
 And after that copy the code below to your initializers folder `app/config/initializers/webpack-rails-manifest.rb`
 
 ```Ruby
+# https://github.com/rails/rails/blob/v4.2.6/actionview/lib/action_view/helpers/asset_tag_helper.rb
+
 module ActionView
   module Helpers
     module AssetTagHelper
       def image_tag(source, options={})
         options = options.symbolize_keys
-        check_for_image_tag_errors(options)
 
         src = options[:src] = "/assets/#{webpack_manifest.fetch(source)}"
 
@@ -146,18 +147,18 @@ module ActionView
 
       def javascript_include_tag(*sources)
         options = sources.extract_options!.stringify_keys
-        path_options = options.extract!('protocol', 'extname', 'host').symbolize_keys
+        path_options = options.extract!('protocol', 'extname').symbolize_keys
         sources.uniq.map { |source|
           tag_options = {
             "src" => "/assets/#{webpack_manifest.fetch(source + '.js')}"
           }.merge!(options)
-          content_tag("script".freeze, "", tag_options)
+          content_tag(:script, "", tag_options)
         }.join("\n").html_safe
       end
 
       def stylesheet_link_tag(*sources)
         options = sources.extract_options!.stringify_keys
-        path_options = options.extract!('protocol', 'host').symbolize_keys
+        path_options = options.extract!('protocol').symbolize_keys
 
         sources.uniq.map { |source|
           tag_options = {
@@ -176,25 +177,9 @@ module ActionView
         rescue
           fail 'Please run webpack'
         end
-
-        def extract_dimensions(size)
-          size = size.to_s
-          if size =~ %r{\A\d+x\d+\z}
-            size.split('x')
-          elsif size =~ %r{\A\d+\z}
-            [size, size]
-          end
-        end
-
-        def check_for_image_tag_errors(options)
-          if options[:size] && (options[:height] || options[:width])
-            raise ArgumentError, "Cannot pass a :size option with a :height or :width option"
-          end
-        end
     end
   end
 end
-
 ```
 
 Now, you can keep using rails helpers to get the assets
@@ -205,6 +190,8 @@ Now, you can keep using rails helpers to get the assets
 = stylesheet_link_tag 'application', media: 'all'
 = javascript_include_tag 'application'
 ```
+
+NOTE: this is an example for rails 4.2.6, the code above may vary on different rails versions
 
 ## License
 
