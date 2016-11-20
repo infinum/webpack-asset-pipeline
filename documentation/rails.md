@@ -1,11 +1,11 @@
 Rails configuration
 ===================
 
-To use this file with Rails you have two choices:
+Rails can be configured to use the manifest file in one of two ways:
 
 #### 1. Adding a new `webpack_asset_url` helper
 
-You'll need a helper to replace asset pipeline. Here is an example how you an do this:
+You'll need a helper to replace asset pipeline. Here is an example of how you can do this:
 
 ```Ruby
 module WebpackHelper
@@ -21,7 +21,7 @@ module WebpackHelper
 end
 ```
 
-This file would then be saved in `app/helpers/webpack_helper.rb` for example.
+This module can then be saved in an appropriately named file (e.g. `app/helpers/webpack_helper.rb`).
 
 Now you can use it like this:
 
@@ -29,11 +29,11 @@ Now you can use it like this:
 <img src="#{webpack_asset_url('logo.svg')}" alt="logo" />
 ```
 
-to require your assets. [Here](https://github.com/infinum/webpack-rails-manifest-plugin/blob/master/example/webpack.config.js#L12) is an example on how to add a digest to a file.
+to require your assets. [Here](https://github.com/infinum/webpack-rails-manifest-plugin/blob/master/example/webpack.config.js#L12) is an example of how to add a digest to a file.
 
-**Take note that you can't use Rails `image_tag`, `stylesheet_link_tag`, `javascript_include_tag` helper.**
+**Please note that you can't use Rails `image_tag`, `stylesheet_link_tag`, `javascript_include_tag` helpers.**
 
-#### 2. Monkey patching rails assets helpers
+#### 2. Monkey patching Rails assets helpers
 
 Be sure to remove rails sprockets entirely by editing your `applicaton.rb` file
 
@@ -54,7 +54,7 @@ require "action_view/railtie"
 require "rails/test_unit/railtie"
 ```
 
-And after that copy the code below to your initializers folder `app/config/initializers/webpack-rails-manifest.rb`
+Then save the following code in the initializers directory as `app/config/initializers/webpack-rails-manifest.rb`
 
 ```Ruby
 # https://github.com/rails/rails/blob/v4.2.6/actionview/lib/action_view/helpers/asset_tag_helper.rb
@@ -112,7 +112,7 @@ module ActionView
 end
 ```
 
-Now, you can keep using rails helpers to get the assets
+You can now use Rails helpers to get the assets, as you normally would.
 
 ```Ruby
 = image_tag('logo.svg')

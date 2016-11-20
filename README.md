@@ -5,7 +5,11 @@ A missing link to Webpack and Ruby on Rails integration.
 
 [![Build Status](https://semaphoreci.com/api/v1/infinum/webpack-rails-manifest-plugin/branches/master/shields_badge.svg)](https://semaphoreci.com/infinum/webpack-rails-manifest-plugin) [![npm version](https://badge.fury.io/js/webpack-rails-manifest-plugin.svg)](https://badge.fury.io/js/webpack-rails-manifest-plugin)
 
-This plugin can be used to flush a list of your assets to a `manifest.json` file and replace asset pipeline. Using that file you can require your assets in Rails (see [Rails helper](documentation/rails.md)).
+This plugin can be used to flush a list of your assets to a `manifest.json` file and replace the asset pipeline.
+
+## Rails
+
+Requireing assets in Rails will be a bit different and requires some configuration. Read thru our [Rails helper documentation](documentation/rails.md).
 
 ## Usage
 
@@ -27,7 +31,7 @@ const RailsManifestPlugin = require('webpack-rails-manifest-plugin');
 }
 ```
 
-You'll find the `manifest.json` file in your output directory. More about options can be read [here](documentation/options.md).
+You'll find the `manifest.json` file in your output directory. You can read ore about the options [here](documentation/options.md).
 
 ## Requiring images
 
@@ -51,7 +55,7 @@ You can see an example configuration and its documentation [here](example/README
 
 ## Output
 
-Once you set everything up you should see this in your `manifest.json` file:
+Once you set everything up, you should see this in your `manifest.json` file:
 
 ```JavaScript
 {
