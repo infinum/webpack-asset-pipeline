@@ -9,7 +9,7 @@ This plugin can be used to flush a list of your assets to a `manifest.json` file
 
 ## Rails
 
-Requireing assets in Rails will be a bit different and needs some configuration. Read our [Rails helper documentation](documentation/rails.md).
+Requiring assets in Rails will be a bit different and needs some configuration. Read our [Rails helper documentation](documentation/rails.md).
 
 ## Usage
 
