@@ -102,7 +102,7 @@ describe('Webpack rails manifest plugin', () => {
       module: {
         loaders: [{
           test: /\.(txt|png)$/,
-          loader: 'file'
+          loader: 'file-loader'
         }]
       }
     });
@@ -130,7 +130,7 @@ describe('Webpack rails manifest plugin', () => {
       module: {
         loaders: [{
           test: /\.(txt|png)$/,
-          loader: 'file'
+          loader: 'file-loader'
         }]
       }
     });
