@@ -1,7 +1,7 @@
 Example Webpack setup
 ======================
 
-Here is an example of a Webpack configuration. The given `webpack.config.js` configuratio nfile will output two bundles (`application.js` and `vendor.js`), as well as process an image.
+Here is an example of a Webpack configuration. The given `webpack.config.js` configuration file will output two bundles (`application.js` and `vendor.js`), as well as process an image.
 
 ## Starting
 

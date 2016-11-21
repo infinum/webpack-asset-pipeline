@@ -18,7 +18,7 @@ This is the output file that will be created after each change. The default valu
 
 ### writeToFileEmit
 
-When using this plugin with [webpack-dev-plugin](https://github.com/webpack/webpack-dev-server) the manifest file will not be written to a file, but to an in-memory filesystem used by webpack-dev-plugin.
+When using this plugin with [webpack-dev-plugin](https://github.com/webpack/webpack-dev-server) the manifest file will not be written to a file, but to an in-memory filesystem used by webpack-dev-plugin. Setting this to `true` will always create a file on the filesystem.
 
 ### extraneous
 
