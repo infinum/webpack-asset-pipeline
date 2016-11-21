@@ -65,6 +65,10 @@ Once you set everything up, you should see this in your `manifest.json` file:
 }
 ```
 
+## Compatibility
+
+This plugin is compatible with Webpack 1.x and 2.x. For rails compatibility please see our [Rails helper documentation](documentation/rails.md).
+
 ## License
 
 The MIT License
