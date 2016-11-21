@@ -5,7 +5,11 @@ A missing link to Webpack and Ruby on Rails integration.
 
 [![Build Status](https://semaphoreci.com/api/v1/infinum/webpack-rails-manifest-plugin/branches/master/shields_badge.svg)](https://semaphoreci.com/infinum/webpack-rails-manifest-plugin) [![npm version](https://badge.fury.io/js/webpack-rails-manifest-plugin.svg)](https://badge.fury.io/js/webpack-rails-manifest-plugin)
 
-This plugin can be used to flush a list of your assets to a `manifest.json` file and replace asset pipeline. Using that file you can require your assets in Rails (see [Rails helper](#rails)).
+This plugin can be used to flush a list of your assets to a `manifest.json` file and replace the asset pipeline.
+
+## Rails
+
+Requireing assets in Rails will be a bit different and needs some configuration. Read our [Rails helper documentation](documentation/rails.md).
 
 ## Usage
 
@@ -27,29 +31,7 @@ const RailsManifestPlugin = require('webpack-rails-manifest-plugin');
 }
 ```
 
-You'll find the `manifest.json` file in your output directory.
-
-## Options
-
-You can specify a few options to the plugin:
-
-```JavaScript
-new RailsManifestPlugin({
-  fileName: 'manifest.json', // Manifest file name to be written out
-  writeToFileEmit: false, // Should we write to fs even if run with memory-fs
-  extraneous: null, // Any assets specified as "extra"
-  mapAssetPath: (requirePath) => requirePath // Map the asset paths to the keys in manifest
-});
-```
-
-### mapAssetPath
-
-The function will receive three arguments:
-* `requirePath` (e.g. `images/photos/sunset.jpg`) - the path that was originally required in JS/CSS/HTML
-* `assetName` (e.g. `sunset.jpg`) - the file name that was originally required in JS/CSS/HTML
-* `isChunk` (eg. `true`) - specifies if the file is in the named chunk. Output JS and CSS files usually are.
-
-The function should return a string that will be used as a key in the manifest. By default, this will be the `requirePath` value.
+You'll find the `manifest.json` file in your output directory. You can read ore about the options [here](documentation/options.md).
 
 ## Requiring images
 
@@ -69,129 +51,23 @@ And then in `application.js` (your entrypoint)
 require('files');
 ```
 
-## Rails
+You can see an example configuration and its documentation [here](example/README.md).
 
-To use this file with Rails you have two choices:
+## Output
 
-#### 1. Adding a new `webpack_asset_url` helper
+Once you set everything up, you should see this in your `manifest.json` file:
 
-You'll need a helper to replace asset pipeline. Here is an example how you an do this:
-
-```Ruby
-module WebpackHelper
-  def webpack_asset_url(asset)
-    "/assets/#{manifest.fetch(asset)}"
-  end
-
-  def manifest
-    @manifest ||= JSON.parse(File.read('manifest.json'))
-  rescue
-    fail 'Please run webpack'
-  end
-end
+```JavaScript
+{
+  "images/file1.jpg": "963eb32907744d9a0d6b98127162808f.jpg",
+  "images/file2.jpg": "162808f4d9a0963eb3290774127d6b98.jpg",
+  "images/file3.jpg": "d6b98127162969a0808f3eb32907744d.jpg"
+}
 ```
 
-This file would then be saved in `app/helpers/webpack_helper.rb` for example.
+## Compatibility
 
-Now you can use it like this:
-
-```HTML
-<img src="#{webpack_asset_url('logo.svg')}" alt="logo" />
-```
-
-to require your assets. [Here](https://github.com/infinum/webpack-rails-manifest-plugin/blob/master/example/webpack.config.js#L12) is an example on how to add a digest to a file.
-
-**Take note that you can't use Rails `image_tag`, `stylesheet_link_tag`, `javascript_include_tag` helper.**
-
-#### 2. Monkey patching rails assets helpers
-
-Be sure to remove rails sprockets entirely by editing your `applicaton.rb` file
-
-```Ruby
-# Comment this out
-# require 'rails/all'
-
-# Include every module separately
-require 'rails'
-# Pick the frameworks you want:
-require "active_model/railtie"
-require "active_job/railtie"
-require "active_record/railtie"
-require "action_controller/railtie"
-require "action_mailer/railtie"
-require "action_view/railtie"
-# require "sprockets/railtie"
-require "rails/test_unit/railtie"
-```
-
-And after that copy the code below to your initializers folder `app/config/initializers/webpack-rails-manifest.rb`
-
-```Ruby
-# https://github.com/rails/rails/blob/v4.2.6/actionview/lib/action_view/helpers/asset_tag_helper.rb
-
-module ActionView
-  module Helpers
-    module AssetTagHelper
-      def image_tag(source, options={})
-        options = options.symbolize_keys
-
-        src = options[:src] = "/assets/#{webpack_manifest.fetch(source)}"
-
-        unless src =~ /^(?:cid|data):/ || src.blank?
-          options[:alt] = options.fetch(:alt){ image_alt(src) }
-        end
-
-        options[:width], options[:height] = extract_dimensions(options.delete(:size)) if options[:size]
-        tag("img", options)
-      end
-
-      def javascript_include_tag(*sources)
-        options = sources.extract_options!.stringify_keys
-        path_options = options.extract!('protocol', 'extname').symbolize_keys
-        sources.uniq.map { |source|
-          tag_options = {
-            "src" => "/assets/#{webpack_manifest.fetch(source + '.js')}"
-          }.merge!(options)
-          content_tag(:script, "", tag_options)
-        }.join("\n").html_safe
-      end
-
-      def stylesheet_link_tag(*sources)
-        options = sources.extract_options!.stringify_keys
-        path_options = options.extract!('protocol').symbolize_keys
-
-        sources.uniq.map { |source|
-          tag_options = {
-            "rel" => "stylesheet",
-            "media" => "screen",
-            "href" => "/assets/#{webpack_manifest.fetch(source + '.css')}"
-          }.merge!(options)
-          tag(:link, tag_options)
-        }.join("\n").html_safe
-      end
-
-      private
-
-        def webpack_manifest
-          @manifest ||= JSON.parse(File.read('manifest.json'))
-        rescue
-          fail 'Please run webpack'
-        end
-    end
-  end
-end
-```
-
-Now, you can keep using rails helpers to get the assets
-
-```Ruby
-= image_tag('logo.svg')
-
-= stylesheet_link_tag 'application', media: 'all'
-= javascript_include_tag 'application'
-```
-
-NOTE: this is an example for rails 4.2.6, the code above may vary on different rails versions
+This plugin is compatible with Webpack 1.x and 2.x. For rails compatibility please see our [Rails helper documentation](documentation/rails.md).
 
 ## License
 

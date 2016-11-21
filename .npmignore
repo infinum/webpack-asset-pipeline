@@ -1,6 +1,6 @@
+documentation/
 example/
 test/
 .github/
 .eslintrc
 index.test.js
-CONTRIBUTING.md
