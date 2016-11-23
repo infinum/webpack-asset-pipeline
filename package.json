@@ -1,6 +1,6 @@
 {
   "name": "webpack-rails-manifest-plugin",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A missing link to Webpack and Rails integration",
   "main": "index.js",
   "scripts": {
