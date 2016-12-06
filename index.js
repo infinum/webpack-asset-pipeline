@@ -3,7 +3,7 @@
 const path = require('path');
 const fse = require('fs-extra');
 
-module.exports = function RailsManifestPlugin(options) {
+module.exports = function WebpackAssetPipeline(options) {
 
    /**
    * Gets a file type from path.

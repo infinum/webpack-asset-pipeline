@@ -4,7 +4,7 @@ Plugin options
 The plugin allows you to specify several options. Here are the default values:
 
 ```JavaScript
-new RailsManifestPlugin({
+new WebpackAssetPipeline({
   fileName: 'manifest.json',
   writeToFileEmit: false,
   extraneous: null,

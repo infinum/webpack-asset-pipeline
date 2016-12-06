@@ -29,7 +29,7 @@ Now you can use it like this:
 <img src="#{webpack_asset_url('logo.svg')}" alt="logo" />
 ```
 
-to require your assets. [Here](https://github.com/infinum/webpack-rails-manifest-plugin/blob/master/example/webpack.config.js#L12) is an example of how to add a digest to a file.
+to require your assets. [Here](https://github.com/infinum/webpack-asset-pipeline/blob/master/example/webpack.config.js#L12) is an example of how to add a digest to a file.
 
 **Please note that you can't use Rails `image_tag`, `stylesheet_link_tag`, `javascript_include_tag` helpers.**
 

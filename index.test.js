@@ -26,7 +26,7 @@ const runWebpack = function(callback, plugin, webpackConfig) {
   compiler.run(callback.bind(this));
 };
 
-describe('Webpack rails manifest plugin', () => {
+describe('webpack-asset-pipeline plugin', () => {
   it('can be required', () => {
     expect(Plugin).not.to.eq(undefined);
     expect(new Plugin().apply).not.to.eq(undefined);
