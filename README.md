@@ -1,15 +1,11 @@
 webpack-rails-manifest-plugin
 ==============================
 
-A missing link to Webpack and Ruby on Rails integration.
+A missing link for the asset pipeline alternative with Webpack.
 
 [![Build Status](https://semaphoreci.com/api/v1/infinum/webpack-rails-manifest-plugin/branches/master/shields_badge.svg)](https://semaphoreci.com/infinum/webpack-rails-manifest-plugin) [![npm version](https://badge.fury.io/js/webpack-rails-manifest-plugin.svg)](https://badge.fury.io/js/webpack-rails-manifest-plugin)
 
 This plugin can be used to flush a list of your assets to a `manifest.json` file and replace the asset pipeline.
-
-## Rails
-
-Requiring assets in Rails will be a bit different and needs some configuration. Read our [Rails helper documentation](documentation/rails.md).
 
 ## Usage
 
@@ -67,7 +63,17 @@ Once you set everything up, you should see this in your `manifest.json` file:
 
 ## Compatibility
 
-This plugin is compatible with Webpack 1.x and 2.x. For rails compatibility please see our [Rails helper documentation](documentation/rails.md).
+This plugin is compatible with Webpack 1.x and 2.x.
+
+## Integrations
+
+### Ruby on Rails
+
+Requiring assets in Rails will be a bit different and needs some configuration. Read our [Rails helper documentation](documentation/integrations/rails.md).
+
+### Others
+
+We're open for pull requests that add instructions about how to integrate this plugin with other frameworks.
 
 ## License
 
