@@ -16,8 +16,8 @@ configuration issue. Check the `example/` folder for a simple setup.
 ## Setup
 
 ```bash
-git clone https://github.com/infinum/webpack-rails-manifest-plugin
-cd webpack-rails-manifest-plugin
+git clone https://github.com/infinum/webpack-asset-pipeline
+cd webpack-asset-pipeline
 npm install
 ```
 

@@ -1,9 +1,9 @@
-webpack-rails-manifest-plugin
+webpack-asset-pipeline
 ==============================
 
 A missing link for the asset pipeline alternative with Webpack.
 
-[![Build Status](https://semaphoreci.com/api/v1/infinum/webpack-rails-manifest-plugin/branches/master/shields_badge.svg)](https://semaphoreci.com/infinum/webpack-rails-manifest-plugin) [![npm version](https://badge.fury.io/js/webpack-rails-manifest-plugin.svg)](https://badge.fury.io/js/webpack-rails-manifest-plugin)
+[![Build Status](https://semaphoreci.com/api/v1/infinum/webpack-asset-pipeline/branches/master/shields_badge.svg)](https://semaphoreci.com/infinum/webpack-asset-pipeline) [![npm version](https://badge.fury.io/js/webpack-asset-pipeline.svg)](https://badge.fury.io/js/webpack-asset-pipeline)
 
 This plugin can be used to flush a list of your assets to a `manifest.json` file and replace the asset pipeline.
 
@@ -12,17 +12,17 @@ This plugin can be used to flush a list of your assets to a `manifest.json` file
 This is a Webpack plugin that creates a manifest file for your assets. It can output files to Webpack (as emitting) or as a file on the filesystem.
 
 ```
-npm install --save-dev webpack-rails-manifest-plugin
+npm install --save-dev webpack-asset-pipeline
 ```
 
 In your `webpack.config.js` file specify the plugin:
 
 ```JavaScript
-const RailsManifestPlugin = require('webpack-rails-manifest-plugin');
+const WebpackAssetPipeline = require('webpack-asset-pipeline');
 
 {
   plugins: [
-    new RailsManifestPlugin()
+    new WebpackAssetPipeline()
   ]
 }
 ```
