@@ -1,7 +1,7 @@
 {
   "name": "webpack-asset-pipeline",
-  "version": "1.1.0",
-  "description": "A missing link to Webpack and Rails integration",
+  "version": "1.1.1",
+  "description": "A missing link for the asset pipeline alternative with Webpack",
   "main": "index.js",
   "scripts": {
     "__eslint": "eslint index.js",
