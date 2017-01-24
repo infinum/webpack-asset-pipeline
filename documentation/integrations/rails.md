@@ -1,11 +1,15 @@
 Rails configuration
 ===================
 
-Rails can be configured to use the manifest file in one of two ways:
+The only thing Ruby on Rails needs to do is to replace the assets helpers. This can be done in one of two ways (depending on your preferences). In both cases, you should remove Rails sprockets because they will not be used, and you won’t be able to use their methods by mistake. The easiest way to do this is with the following command when you’re creating your app:
+
+```bash
+rails new app --skip-sprockets
+```
 
 #### 1. Adding a new `webpack_asset_url` helper
 
-You'll need a helper to replace asset pipeline. Here is an example of how you can do this:
+You'll need a helper to replace the asset pipeline. Here is an example of how you can do this:
 
 ```Ruby
 module WebpackHelper
@@ -35,24 +39,7 @@ to require your assets. [Here](https://github.com/infinum/webpack-asset-pipeline
 
 #### 2. Monkey patching Rails assets helpers
 
-Be sure to remove rails sprockets entirely by editing your `applicaton.rb` file
-
-```Ruby
-# Comment this out
-# require 'rails/all'
-
-# Include every module separately
-require 'rails'
-# Pick the frameworks you want:
-require "active_model/railtie"
-require "active_job/railtie"
-require "active_record/railtie"
-require "action_controller/railtie"
-require "action_mailer/railtie"
-require "action_view/railtie"
-# require "sprockets/railtie"
-require "rails/test_unit/railtie"
-```
+The second solution means a little more work in the start, but your application code will stay the same. Although removing sprockets is optional in the first method, in this case you have to remove them.
 
 Then save the following code in the initializers directory as `app/config/initializers/webpack-rails-manifest.rb`
 
@@ -112,7 +99,7 @@ module ActionView
 end
 ```
 
-You can now use Rails helpers to get the assets, as you normally would.
+After you're done with monkey patching, you'll be able to use the assets in the same way you used the asset pipeline:
 
 ```Ruby
 = image_tag('logo.svg')
