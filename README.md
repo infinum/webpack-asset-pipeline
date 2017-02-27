@@ -27,7 +27,7 @@ const WebpackAssetPipeline = require('webpack-asset-pipeline');
 }
 ```
 
-You'll find the `manifest.json` file in your output directory. You can read ore about the options [here](documentation/options.md).
+You'll find the `manifest.json` file in your output directory. You can read more about the options [here](documentation/options.md).
 
 ## Requiring images
 
