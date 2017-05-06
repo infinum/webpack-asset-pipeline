@@ -1,6 +1,8 @@
 webpack-asset-pipeline
 ==============================
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/infinum/webpack-asset-pipeline.svg)](https://greenkeeper.io/)
+
 A missing link for the asset pipeline alternative with Webpack.
 
 [![Build Status](https://semaphoreci.com/api/v1/infinum/webpack-asset-pipeline/branches/master/shields_badge.svg)](https://semaphoreci.com/infinum/webpack-asset-pipeline) [![npm version](https://badge.fury.io/js/webpack-asset-pipeline.svg)](https://badge.fury.io/js/webpack-asset-pipeline)
