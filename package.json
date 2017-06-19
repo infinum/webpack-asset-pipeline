@@ -50,7 +50,7 @@
     "husky": "^0.13.2",
     "memory-fs": "^0.4.0",
     "mocha": "^3.2.0",
-    "webpack": "^2.2.1"
+    "webpack": "^3.0.0"
   },
   "dependencies": {
     "fs-extra": "^3.0.1"
