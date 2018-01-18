@@ -49,7 +49,7 @@
     "file-loader": "^1.0.0-rc.0",
     "husky": "^0.14.0",
     "memory-fs": "^0.4.0",
-    "mocha": "^4.0.0",
+    "mocha": "^5.0.0",
     "webpack": "^3.0.0"
   },
   "dependencies": {
