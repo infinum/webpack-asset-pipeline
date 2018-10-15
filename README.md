@@ -33,7 +33,7 @@ You'll find the `manifest.json` file in your output directory. You can read more
 
 ## Requiring images
 
-All images have to be required in the JavaScript in order for webpack to process them, except the ones you require in your scss file (because wepback is processing your scss file adready)
+All images have to be required in the JavaScript in order for webpack to process them, except the ones you require in your scss file (because wepback is processing your scss file already)
 
 You can create a new file which will hold all the images, e.g. `files.js`
 
